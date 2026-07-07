@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../auth/user.model.js";
+import generateToken from "../../utils/generateToken.js";
 
 export const registerUser = async (userData) => {
     // Existing user check
@@ -20,4 +21,35 @@ export const registerUser = async (userData) => {
 
     // Return user
     return user;
-}
+};
+
+export const loginUser = async (userData) => {
+    // Check user existence
+    const user = await User.findOne({ email: userData.email }).select("+password");
+
+    if (!user) {
+        throw new Error("Invalid email or password.");
+    }
+
+    // Check Password
+    const isPasswordMatched = await bcrypt.compare(
+        userData.password,
+        user.password
+    );
+
+    if (!isPasswordMatched) {
+        throw new Error("Invalid email or password.");
+    }
+
+    // Generate JWT Tokrn
+    const token = generateToken({
+        id: user._id,
+        role: user.role,
+    });
+
+    // Return user and token
+    return {
+        user,
+        token,
+    };
+};
