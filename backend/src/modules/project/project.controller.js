@@ -10,7 +10,10 @@ export const createProject = async (req, res, next) => {
         const validatedData = createProjectSchema.parse(req.body);
 
         // Call service
-        const project = await projectService.createProject(validatedData);
+        const project = await projectService.createProject({
+            ...validatedData,
+            createdBy: req.user._id,
+        });
 
         // Send response
         res.status(201).json({
