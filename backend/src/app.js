@@ -9,6 +9,7 @@ import express from "express";
 
 import registerMiddlewares from "./middlewares/index.js";
 import registerRoutes from "./routes/index.js";
+import errorHandler from "./shared/errors/errorHandler.js";
 
 const app = express();
 
@@ -16,20 +17,13 @@ registerMiddlewares(app);
 registerRoutes(app);
 
 // 404 Not Found Handler
-app.use((req, res) => {
-    res.status(404).json({
-        success: false,
-        message: "Route Not Found",
-        path: req.path,
-    });
+app.use((req, res, next) => {
+    const error = new Error(`Cannot ${req.method} ${req.originalUrl}`);
+    error.status = 404;
+    next(error);
 });
 
 // Global Error Handler
-app.use((err, req, res, next) => {
-    res.status(500).json({
-        success: false,
-        message: err.message,
-    });
-});
+app.use(errorHandler);
 
 export default app;
