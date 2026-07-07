@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 5000;
 // Database connection
 connectDatabase();
 
+
 // Server
 app.listen(PORT, () => {
     console.log(`PrismCode API is running on port http://localhost:${PORT}`);
