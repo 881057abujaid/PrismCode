@@ -3,6 +3,7 @@
 */
 
 import { Router } from "express";
+import projectRoutes from "../modules/project/project.routes.js";
 
 const router = Router();
 
@@ -13,6 +14,9 @@ router.get("/health", (req, res) => {
         version: "v1"
     });
 });
+
+// Projects routes
+router.use("/projects", projectRoutes);
 
 export default function registerRoutes(app) {
     app.use("/api/v1", router);
