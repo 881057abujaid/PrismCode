@@ -4,6 +4,7 @@
 
 import { Router } from "express";
 import projectRoutes from "../modules/project/project.routes.js";
+import authRoutes from "../modules/auth/auth.routes.js";
 
 const router = Router();
 
@@ -16,6 +17,7 @@ router.get("/health", (req, res) => {
 });
 
 // Projects routes
+router.use("/auth", authRoutes);
 router.use("/projects", projectRoutes);
 
 export default function registerRoutes(app) {
