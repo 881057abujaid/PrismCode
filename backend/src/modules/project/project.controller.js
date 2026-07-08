@@ -57,6 +57,28 @@ export const getProjects = async (req, res, next) => {
     }
 };
 
+// @desc    Get a project by ID
+// @route   GET /api/v1/projects/:projectId
+// @access  Private
+export const getProject = async (req, res, next) => {
+    try {
+        // Call Service
+        const project = await projectService.getProject(req.params.projectId, req.user._id);
+
+        // Send Response
+        res.status(200).json({
+            success: true,
+            message: "Project fetched successfully.",
+            data: project,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Update a project
+// @route   PUT /api/v1/projects/:projectId
+// @access  Private
 export const updateProject = async (req, res, next) => {
     try {
         // Call Service

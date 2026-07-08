@@ -41,6 +41,34 @@ export const getAllProjects = async ({ createdBy }) => {
     }
 };
 
+// @desc    Get a project by ID
+// @route   GET /api/v1/projects/:projectId
+// @access  Private
+export const getProject = async (projectId, userId) => {
+    try {
+        // Find the project
+        const project = await Project.findById(projectId);
+
+        // Check if project exists
+        if (!project) {
+            throw new Error("Project not found");
+        }
+
+        // Check Ownership
+        if (project.createdBy.toString() !== userId.toString()) {
+            throw new Error("You are not authorized to view this project");
+        }
+
+        // Send response
+        return project;
+    } catch (error) {
+        throw error;
+    }
+};
+
+// @desc    Update a project
+// @route   PUT /api/v1/projects/:projectId
+// @access  Private
 export const updateProject = async (projectId, userId, updatedData) => {
     // Check Project Existence
     const project = await Project.findById(projectId);
