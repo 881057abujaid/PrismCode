@@ -1,3 +1,12 @@
+/**
+ * project.model.js
+ * 
+ * Model for project-related operations.
+ * 
+ * @module project
+ * @requires mongoose
+*/
+
 import mongoose from "mongoose";
 
 const projectSchema = new mongoose.Schema({

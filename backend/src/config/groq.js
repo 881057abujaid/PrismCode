@@ -1,3 +1,12 @@
+/**
+ * groq.js
+ * 
+ * Groq API client configuration.
+ * 
+ * @module groq
+ * @requires groq-sdk
+*/
+
 import Groq from "groq-sdk";
 
 let groq = null;

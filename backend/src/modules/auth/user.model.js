@@ -1,3 +1,12 @@
+/**
+ * user.model.js
+ * 
+ * Model for user-related operations.
+ * 
+ * @module user
+ * @requires mongoose
+*/
+
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({

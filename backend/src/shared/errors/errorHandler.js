@@ -1,4 +1,13 @@
-import { success, ZodError } from "zod";
+/**
+ * errorHandler.js
+ * 
+ * Global error handling middleware.
+ * 
+ * @module errorHandler
+ * @requires zod
+*/
+
+import { ZodError } from "zod";
 
 const errorHandler = (err, req, res, next) => {
     console.error(err);

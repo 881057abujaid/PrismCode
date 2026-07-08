@@ -1,13 +1,21 @@
+/**
+ * middlewares/index.js
+ * 
+ * Registers global middleware for the Express app.
+ * 
+ * @module middlewares
+ * @requires express
+ * @requires cors
+ * @requires helmet
+ * @requires morgan
+*/
+
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 
-
-/**
- * Registers global middleware for the Express app.
-*/
-
+// Register global middleware
 const registerMiddlewares = (app) => {
     // Security
     app.use(helmet());

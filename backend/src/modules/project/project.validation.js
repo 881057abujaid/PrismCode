@@ -1,3 +1,12 @@
+/**
+ * project.validation.js
+ * 
+ * Validation schemas for project-related operations.
+ * 
+ * @module project
+ * @requires zod
+ */
+
 import { z } from "zod";
 
 export const createProjectSchema = z.object({

@@ -1,5 +1,10 @@
 /**
  * Registers all routes for the Express app.
+ * 
+ * @module routes
+ * @requires express
+ * @requires ../modules/project/project.routes
+ * @requires ../modules/auth/auth.routes
 */
 
 import { Router } from "express";

@@ -1,3 +1,12 @@
+/**
+ * generateToken.js
+ * 
+ * Generates a JWT token.
+ * 
+ * @module generateToken
+ * @requires jsonwebtoken
+*/
+
 import jwt from "jsonwebtoken";
 
 const generateToken = (payload) => {

@@ -1,3 +1,12 @@
+/**
+ * database.js
+ * 
+ * Database connection configuration.
+ * 
+ * @module database
+ * @requires mongoose
+*/
+
 import mongoose from "mongoose";
 
 const connectDatabase = async () => {

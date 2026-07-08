@@ -1,3 +1,13 @@
+/**
+ * auth.middleware.js
+ * 
+ * Middleware for auth-related operations.
+ * 
+ * @module auth
+ * @requires jsonwebtoken
+ * @requires ../auth/user.model
+*/
+
 import jwt from "jsonwebtoken";
 import User from "./user.model.js";
 

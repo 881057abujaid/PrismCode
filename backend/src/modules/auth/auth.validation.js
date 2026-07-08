@@ -1,3 +1,12 @@
+/**
+ * auth.validation.js
+ * 
+ * Validation schemas for auth-related operations.
+ * 
+ * @module auth
+ * @requires zod
+*/
+
 import { z } from "zod";
 
 export const registerSchema = z.object({

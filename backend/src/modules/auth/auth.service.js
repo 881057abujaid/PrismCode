@@ -1,3 +1,14 @@
+/**
+ * auth.service.js
+ * 
+ * Services for auth-related operations.
+ * 
+ * @module auth
+ * @requires bcryptjs
+ * @requires ../auth/user.model
+ * @requires ../utils/generateToken
+*/
+
 import bcrypt from "bcryptjs";
 import User from "../auth/user.model.js";
 import generateToken from "../../utils/generateToken.js";

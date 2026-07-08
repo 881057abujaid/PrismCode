@@ -1,3 +1,13 @@
+/**
+ * project.controller.js
+ * 
+ * Controllers for project-related operations.
+ * 
+ * @module project
+ * @requires project.service
+ * @requires project.validation
+ */
+
 import { createProjectSchema } from "./project.validation.js";
 import * as projectService from "./project.service.js";
 
@@ -24,4 +34,25 @@ export const createProject = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
+
+// @desc    Get all projects
+// @route   GET /api/v1/projects
+// @access  Private
+export const getProjects = async (req, res, next) => {
+    try {
+        // Call service
+        const projects = await projectService.getAllProjects({
+            createdBy: req.user._id,
+        });
+
+        // Send response
+        res.status(200).json({
+            success: true,
+            message: "Projects fetched successfully.",
+            data: projects,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
