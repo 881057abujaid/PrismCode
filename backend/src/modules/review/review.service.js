@@ -31,21 +31,37 @@ export const testGroqConnection = async () => {
 // @access  Private
 export const generateReview = async (language, code) => {
     const prompt = `
-    You are a senior software engineer.
+    You are a Senior Software Engineer and Code Reviewer.
     
-    Review the following ${language} code.
-
-    Provide:
-
-    1. Summary
-    2. Bugs
-    3. Improvements
-    4. Best Practices
-    5. Optimized Code
-
+    Your task is to review the submitted source code.
+    
+    Analyze the code carefully and provide your review in Markdown.
+    
+    Include the following sections:
+    
+    # Code Summary
+    
+    # Strengths
+    
+    # Issues Found
+    
+    # Security Concerns
+    
+    # Performance Improvements
+    
+    # Clean Code Suggestions
+    
+    # Best Practices
+    
+    # Final Verdict
+    
+    Do not rewrite the entire code unless necessary.
+    
+    Language:
+    ${language}
+    
     Code:
-    ${code}
-    `;
+    ${code}`;
 
     const response = await groq.chat.completions.create({
         model: "llama-3.3-70b-versatile",
