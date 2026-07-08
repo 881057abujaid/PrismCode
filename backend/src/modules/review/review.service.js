@@ -5,9 +5,11 @@
  * 
  * @module review
  * @requires ../config/groq
+ * @requires ../project/project.model
 */
 
 import { getGroqClient } from "../../config/groq.js";
+import Project from "../project/project.model.js";
 
 // @desc    Test Groq connection
 // @route   GET /api/v1/review/test-groq
@@ -72,7 +74,17 @@ export const generateReview = async (language, code) => {
     ${language}
     
     Code:
-    ${code}`;
+    ${code}
+    
+    Give me the review in the JSON format. With Keys as:
+    codeSummary
+    strengths
+    issuesFound
+    securityConcerns
+    performanceImprovements
+    cleanCodeSuggestions
+    bestPractices
+    finalVerdict`;
 
     const response = await groq.chat.completions.create({
         model: "llama-3.3-70b-versatile",
@@ -88,3 +100,29 @@ export const generateReview = async (language, code) => {
 
     return response?.choices?.[0]?.message?.content;
 };
+
+export const generateProjectReview = async (projectId) => {
+    // Check project existence
+    const project = await Project.findById(projectId);
+    if (!project) {
+        throw new Error("Project not found");
+    }
+
+    // Check if review already exists
+    if (project.review) {
+        return project;
+    }
+
+    // Generate AI Review from GROQ
+    const review = await generateReview(project.language, project.code);
+
+    // Update project with review
+    project.review = review;
+    project.status = "reviewed";
+
+    // Save project
+    await project.save();
+
+    // Return review
+    return project;
+}

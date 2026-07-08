@@ -12,19 +12,19 @@ import * as reviewService from "./review.service.js";
 // @desc    Generate review for a code
 // @route   POST /api/v1/review/generate-review
 // @access  Private
-export const generateReview = async (req, res, next) => {
+export const generateProjectReview = async (req, res, next) => {
     try {
-        // Validate request data
-        const { language, code } = req.body;
+        // Extract projectId from params
+        const { projectId } = req.params.projectId;
 
         // Call service
-        const review = await reviewService.generateReview(language, code);
+        const project = await reviewService.generateProjectReview(projectId);
 
         // Send response
         return res.status(200).json({
             success: true,
             message: "Review generated successfully.",
-            data: review,
+            data: project,
         });
 
     } catch (error) {
