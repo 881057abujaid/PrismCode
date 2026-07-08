@@ -101,7 +101,7 @@ export const generateReview = async (language, code) => {
     return response?.choices?.[0]?.message?.content;
 };
 
-export const generateProjectReview = async (projectId) => {
+export const generateProjectReview = async (projectId, userId) => {
     // Check project existence
     const project = await Project.findById(projectId);
     if (!project) {
@@ -111,6 +111,11 @@ export const generateProjectReview = async (projectId) => {
     // Check if review already exists
     if (project.review) {
         return project;
+    }
+
+    // Ownership Check
+    if (project.createdBy.toString() !== userId.toString()) {
+        throw new Error("You are not authorized to review this project");
     }
 
     // Generate AI Review from GROQ

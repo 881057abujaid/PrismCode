@@ -9,12 +9,12 @@
 */
 
 import { Router } from "express";
-import { generateReview } from "./review.controller.js";
+import { generateProjectReview } from "./review.controller.js";
 import { protect } from "../auth/auth.middleware.js";
 
 const router = Router();
 
-// Generate review for a code
-router.post("/", protect, generateReview);
+// Generate review for a project
+router.post("/:projectId/review", protect, generateProjectReview);
 
 export default router;

@@ -18,7 +18,7 @@ export const generateProjectReview = async (req, res, next) => {
         const { projectId } = req.params.projectId;
 
         // Call service
-        const project = await reviewService.generateProjectReview(projectId);
+        const project = await reviewService.generateProjectReview(projectId, req.user.id);
 
         // Send response
         return res.status(200).json({
