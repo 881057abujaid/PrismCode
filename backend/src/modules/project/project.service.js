@@ -7,6 +7,7 @@
  * @requires project.model
  */
 
+import { invalidateProjectReview } from "../../utils/invalidateReview.js";
 import Project from "./project.model.js";
 
 
@@ -38,4 +39,35 @@ export const getAllProjects = async ({ createdBy }) => {
     } catch (error) {
         throw error;
     }
+};
+
+export const updateProject = async (projectId, userId, updatedData) => {
+    // Check Project Existence
+    const project = await Project.findById(projectId);
+    if (!project) {
+        throw new Error("Project not found");
+    }
+
+    // Check Ownership
+    if (project.createdBy.toString() !== userId.toString()) {
+        throw new Error("You are not authorized to update this project");
+    }
+
+    // Compare Old Code and New Code
+    if (project.code !== updatedData.code) {
+        // Reset Review Status if code changes
+        invalidateProjectReview(project);
+    }
+
+    // Update Project Data
+    project.title = updatedData.title || project.title;
+    project.description = updatedData.description || project.description;
+    project.language = updatedData.language || project.language;
+    project.code = updatedData.code || project.code;
+
+    // Save Project
+    await project.save();
+
+    // Return Updated Project
+    return project;
 };

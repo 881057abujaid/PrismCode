@@ -5,10 +5,11 @@
  * 
  * @module project
  * @requires zod
- */
+*/
 
 import { z } from "zod";
 
+// Create project validation schema
 export const createProjectSchema = z.object({
     title: z
         .string()

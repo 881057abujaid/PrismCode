@@ -56,3 +56,23 @@ export const getProjects = async (req, res, next) => {
         next(error);
     }
 };
+
+export const updateProject = async (req, res, next) => {
+    try {
+        // Call Service
+        const project = await projectService.updateProject(
+            req.params.projectId,
+            req.user._id,
+            req.body
+        );
+
+        // Send Response
+        res.status(200).json({
+            success: true,
+            message: "Project updated successfully.",
+            data: project,
+        });
+    } catch (error) {
+        next(error);
+    }
+};

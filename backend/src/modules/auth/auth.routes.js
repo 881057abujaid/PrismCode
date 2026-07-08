@@ -13,7 +13,10 @@ import { login, register } from "./auth.controller.js";
 
 const router = Router();
 
+// Register a new user
 router.post("/register", register);
+
+// Login a user
 router.post("/login", login);
 
 export default router;

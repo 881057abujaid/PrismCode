@@ -10,7 +10,7 @@
  */
 
 import { Router } from "express";
-import { createProject, getProjects } from "./project.controller.js";
+import { createProject, getProjects, updateProject } from "./project.controller.js";
 import { generateProjectReview } from "../review/review.controller.js";
 import { protect } from "../auth/auth.middleware.js";
 
@@ -24,5 +24,8 @@ router.get("/", protect, getProjects);
 
 // Generate review for a project
 router.post("/:projectId/review", protect, generateProjectReview);
+
+// Update a project
+router.put("/:projectId", protect, updateProject);
 
 export default router;

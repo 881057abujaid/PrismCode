@@ -15,6 +15,7 @@ import reviewRoutes from "../modules/review/review.routes.js";
 
 const router = Router();
 
+// Health check
 router.get("/health", (req, res) => {
     res.status(200).json({
         success: true,
@@ -23,9 +24,13 @@ router.get("/health", (req, res) => {
     });
 });
 
-// Projects routes
+// Authentication routes
 router.use("/auth", authRoutes);
+
+// Projects routes
 router.use("/projects", projectRoutes);
+
+// Review routes
 router.use("/reviews", reviewRoutes);
 
 export default function registerRoutes(app) {
