@@ -123,6 +123,7 @@ export const generateProjectReview = async (projectId, userId) => {
 
     // Update project with review
     project.review = review;
+    project.reviewedAt = new Date();
     project.status = "reviewed";
 
     // Save project

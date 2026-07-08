@@ -34,6 +34,10 @@ const projectSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
+    reviewedAt: {
+        type: Date,
+        default: null,
+    },
     status: {
         type: String,
         enum: ["pending", "reviewed"],
