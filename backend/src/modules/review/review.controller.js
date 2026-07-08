@@ -15,10 +15,10 @@ import * as reviewService from "./review.service.js";
 export const generateProjectReview = async (req, res, next) => {
     try {
         // Extract projectId from params
-        const { projectId } = req.params.projectId;
+        const { projectId } = req.params;
 
         // Call service
-        const project = await reviewService.generateProjectReview(projectId, req.user.id);
+        const project = await reviewService.generateProjectReview(projectId, req.user._id);
 
         // Send response
         return res.status(200).json({

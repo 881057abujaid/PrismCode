@@ -11,6 +11,7 @@
 
 import { Router } from "express";
 import { createProject, getProjects } from "./project.controller.js";
+import { generateProjectReview } from "../review/review.controller.js";
 import { protect } from "../auth/auth.middleware.js";
 
 const router = Router();
@@ -20,5 +21,8 @@ router.post("/", protect, createProject);
 
 // Get all projects
 router.get("/", protect, getProjects);
+
+// Generate review for a project
+router.post("/:projectId/review", protect, generateProjectReview);
 
 export default router;

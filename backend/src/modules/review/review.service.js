@@ -108,14 +108,14 @@ export const generateProjectReview = async (projectId, userId) => {
         throw new Error("Project not found");
     }
 
-    // Check if review already exists
-    if (project.review) {
-        return project;
-    }
-
     // Ownership Check
     if (project.createdBy.toString() !== userId.toString()) {
         throw new Error("You are not authorized to review this project");
+    }
+
+    // Check if review already exists
+    if (project.review) {
+        return project;
     }
 
     // Generate AI Review from GROQ

@@ -14,7 +14,7 @@ import { protect } from "../auth/auth.middleware.js";
 
 const router = Router();
 
-// Generate review for a project
-router.post("/:projectId/review", protect, generateProjectReview);
+// Generate review for a code
+router.post("/", protect, generateProjectReview);
 
 export default router;
