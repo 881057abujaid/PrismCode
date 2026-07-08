@@ -34,8 +34,11 @@ export const getAllProjects = async ({ createdBy }) => {
             createdBy
         });
 
+        // Filter out deleted projects
+        const activeProjects = projects.filter(project => !project.isDeleted);
+
         // Send response
-        return projects;
+        return activeProjects;
     } catch (error) {
         throw error;
     }
@@ -52,6 +55,11 @@ export const getProject = async (projectId, userId) => {
         // Check if project exists
         if (!project) {
             throw new Error("Project not found");
+        }
+
+        // Check if Project is Deleted
+        if (project.isDeleted) {
+            throw new Error("Project is deleted");
         }
 
         // Check Ownership
@@ -76,6 +84,11 @@ export const updateProject = async (projectId, userId, updatedData) => {
         throw new Error("Project not found");
     }
 
+    // Check if Project is Deleted
+    if (project.isDeleted) {
+        throw new Error("Project is deleted");
+    }
+
     // Check Ownership
     if (project.createdBy.toString() !== userId.toString()) {
         throw new Error("You are not authorized to update this project");
@@ -97,5 +110,36 @@ export const updateProject = async (projectId, userId, updatedData) => {
     await project.save();
 
     // Return Updated Project
+    return project;
+};
+
+// @desc    Delete a project
+// @route   DELETE /api/v1/projects/:projectId
+// @access  Private
+export const deleteProject = async (projectId, userId) => {
+    // Check Project Existence
+    const project = await Project.findById(projectId);
+    if (!project) {
+        throw new Error("Project not found");
+    }
+
+    // Check Ownership
+    if (project.createdBy.toString() !== userId.toString()) {
+        throw new Error("You are not authorized to delete this project");
+    }
+
+    // Check if Project is Already Deleted
+    if (project.isDeleted) {
+        throw new Error("Project is already deleted");
+    }
+
+    // Soft Delete Project
+    project.isDeleted = true;
+    project.deletedAt = new Date();
+
+    // Save Project
+    await project.save();
+
+    // Return Deleted Project
     return project;
 };

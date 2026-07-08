@@ -98,3 +98,22 @@ export const updateProject = async (req, res, next) => {
         next(error);
     }
 };
+
+// @desc    Delete a project
+// @route   DELETE /api/v1/projects/:projectId
+// @access  Private
+export const deleteProject = async (req, res, next) => {
+    try {
+        // Call Service
+        const project = await projectService.deleteProject(req.params.projectId, req.user._id);
+
+        // Send Response
+        res.status(200).json({
+            success: true,
+            message: "Project deleted successfully.",
+            data: project,
+        });
+    } catch (error) {
+        next(error);
+    }
+};

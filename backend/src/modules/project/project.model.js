@@ -43,6 +43,14 @@ const projectSchema = new mongoose.Schema({
         enum: ["pending", "reviewed"],
         default: "pending",
     },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+    },
+    deletedAt: {
+        type: Date,
+        default: null,
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

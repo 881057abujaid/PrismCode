@@ -10,7 +10,7 @@
  */
 
 import { Router } from "express";
-import { createProject, getProjects, updateProject, getProject } from "./project.controller.js";
+import { createProject, getProjects, updateProject, getProject, deleteProject } from "./project.controller.js";
 import { generateProjectReview } from "../review/review.controller.js";
 import { protect } from "../auth/auth.middleware.js";
 
@@ -30,5 +30,8 @@ router.post("/:projectId/review", protect, generateProjectReview);
 
 // Update a project
 router.put("/:projectId", protect, updateProject);
+
+// Soft Delete a Project
+router.delete("/:projectId", protect, deleteProject);
 
 export default router;
