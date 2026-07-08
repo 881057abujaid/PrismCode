@@ -57,6 +57,16 @@ export const generateReview = async (language, code) => {
     # Final Verdict
     
     Do not rewrite the entire code unless necessary.
+
+    Do not recommend TypeScript unless the submitted code already uses TypeScript.
+
+    Do not suggest classes, design patterns or architectural changes for very small utility functions.
+
+    Keep the review proportional to the complexity of the code.
+
+    Avoid generic advice.
+
+    Give practical suggestions only.
     
     Language:
     ${language}
