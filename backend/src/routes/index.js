@@ -5,11 +5,13 @@
  * @requires express
  * @requires ../modules/project/project.routes
  * @requires ../modules/auth/auth.routes
+ * @requires ../modules/review/review.routes
 */
 
 import { Router } from "express";
 import projectRoutes from "../modules/project/project.routes.js";
 import authRoutes from "../modules/auth/auth.routes.js";
+import reviewRoutes from "../modules/review/review.routes.js";
 
 const router = Router();
 
@@ -24,6 +26,7 @@ router.get("/health", (req, res) => {
 // Projects routes
 router.use("/auth", authRoutes);
 router.use("/projects", projectRoutes);
+router.use("/reviews", reviewRoutes);
 
 export default function registerRoutes(app) {
     app.use("/api/v1", router);

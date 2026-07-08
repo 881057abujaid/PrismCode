@@ -30,6 +30,7 @@ export const testGroqConnection = async () => {
 // @route   POST /api/v1/review/generate-review
 // @access  Private
 export const generateReview = async (language, code) => {
+    const groq = getGroqClient();
     const prompt = `
     You are a Senior Software Engineer and Code Reviewer.
     
