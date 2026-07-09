@@ -50,17 +50,17 @@ export const getProject = async (projectId, userId) => {
 
     // Check if project exists
     if (!project) {
-        throw new Error(ERROR_MESSAGES.PROJECT_NOT_FOUND);
+        throw new AppError(ERROR_MESSAGES.PROJECT_NOT_FOUND, 404);
     }
 
     // Check if Project is Deleted
     if (project.isDeleted) {
-        throw new Error(ERROR_MESSAGES.PROJECT_IS_DELETED);
+        throw new AppError(ERROR_MESSAGES.PROJECT_IS_DELETED, 400);
     }
 
     // Check Ownership
     if (project.createdBy.toString() !== userId.toString()) {
-        throw new Error(ERROR_MESSAGES.NOT_AUTHORIZED);
+        throw new AppError(ERROR_MESSAGES.NOT_AUTHORIZED, 403);
     }
 
     // Send response
@@ -74,17 +74,17 @@ export const updateProject = async (projectId, userId, updatedData) => {
     // Check Project Existence
     const project = await Project.findById(projectId);
     if (!project) {
-        throw new Error(ERROR_MESSAGES.PROJECT_NOT_FOUND);
+        throw new AppError(ERROR_MESSAGES.PROJECT_NOT_FOUND, 404);
     }
 
     // Check if Project is Deleted
     if (project.isDeleted) {
-        throw new Error(ERROR_MESSAGES.PROJECT_IS_DELETED);
+        throw new AppError(ERROR_MESSAGES.PROJECT_IS_DELETED, 400);
     }
 
     // Check Ownership
     if (project.createdBy.toString() !== userId.toString()) {
-        throw new Error(ERROR_MESSAGES.NOT_AUTHORIZED);
+        throw new AppError(ERROR_MESSAGES.NOT_AUTHORIZED, 403);
     }
 
     // Compare Old Code and New Code
@@ -113,17 +113,17 @@ export const deleteProject = async (projectId, userId) => {
     // Check Project Existence
     const project = await Project.findById(projectId);
     if (!project) {
-        throw new Error(ERROR_MESSAGES.PROJECT_NOT_FOUND);
+        throw new AppError(ERROR_MESSAGES.PROJECT_NOT_FOUND, 404);
     }
 
     // Check Ownership
     if (project.createdBy.toString() !== userId.toString()) {
-        throw new Error(ERROR_MESSAGES.NOT_AUTHORIZED);
+        throw new AppError(ERROR_MESSAGES.NOT_AUTHORIZED, 403);
     }
 
     // Check if Project is Already Deleted
     if (project.isDeleted) {
-        throw new Error(ERROR_MESSAGES.PROJECT_ALREADY_DELETED);
+        throw new AppError(ERROR_MESSAGES.PROJECT_ALREADY_DELETED, 400);
     }
 
     // Soft Delete Project
