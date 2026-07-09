@@ -1,6 +1,6 @@
 const App = () => {
   return (
-    <h1 className="text-4xl font-bold text-purple-500">PrismCode</h1>
+    <h1 className="bg-background text-white border border-border">PrismCode</h1>
   );
 }
 
