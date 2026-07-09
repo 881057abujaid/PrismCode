@@ -11,6 +11,7 @@
 import jwt from "jsonwebtoken";
 import User from "./user.model.js";
 import { ERROR_MESSAGES } from "../../shared/constants/messages.js";
+import { errorResponse } from "../../shared/responses/apiResponse.js";
 
 export const protect = async (req, res, next) => {
     try {
@@ -18,10 +19,7 @@ export const protect = async (req, res, next) => {
         const authHeader = req.headers.authorization;
 
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            return res.status(401).json({
-                success: false,
-                message: ERROR_MESSAGES.AUTH_REQUIRED,
-            });
+            return errorResponse(res, 401, ERROR_MESSAGES.AUTH_REQUIRED);
         }
 
         // Extract Token
@@ -34,10 +32,7 @@ export const protect = async (req, res, next) => {
         const user = await User.findById(decoded.id);
 
         if (!user) {
-            return res.status(401).json({
-                success: false,
-                message: ERROR_MESSAGES.USER_NOT_FOUND,
-            });
+            return errorResponse(res, 401, ERROR_MESSAGES.USER_NOT_FOUND);
         }
 
         // Attach user to request
@@ -45,6 +40,10 @@ export const protect = async (req, res, next) => {
         next();
 
     } catch (error) {
+        // Check if it's a JWT error (invalid or expired token)
+        if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
+            return errorResponse(res, 401, ERROR_MESSAGES.AUTH_REQUIRED);
+        }
         next(error);
     }
 };

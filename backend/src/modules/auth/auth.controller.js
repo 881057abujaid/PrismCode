@@ -11,6 +11,7 @@
 import { loginSchema, registerSchema } from "./auth.validation.js";
 import * as authService from "./auth.service.js";
 import { SUCCESS_MESSAGES } from "../../shared/constants/messages.js";
+import { successResponse } from "../../shared/responses/apiResponse.js";
 
 // @desc    Register a new user
 // @route   POST /api/v1/auth/register
@@ -21,14 +22,10 @@ export const register = async (req, res, next) => {
 
         const user = await authService.registerUser(validatedData);
 
-        return res.status(201).json({
-            success: true,
-            message: SUCCESS_MESSAGES.ACCOUNT_CREATED,
-            data: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-            },
+        return successResponse(res, 201, SUCCESS_MESSAGES.ACCOUNT_CREATED, {
+            id: user._id,
+            name: user.name,
+            email: user.email,
         });
     } catch (error) {
         next(error);
@@ -44,16 +41,12 @@ export const login = async (req, res, next) => {
 
         const { user, token } = await authService.loginUser(validatedData);
 
-        return res.status(200).json({
-            success: true,
-            message: SUCCESS_MESSAGES.LOGIN,
-            data: {
-                token,
-                user: {
-                    id: user._id,
-                    name: user.name,
-                    email: user.email,
-                },
+        return successResponse(res, 200, SUCCESS_MESSAGES.LOGIN, {
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
             },
         });
     } catch (error) {
@@ -66,11 +59,7 @@ export const login = async (req, res, next) => {
 // @access  Private
 export const logout = async (req, res, next) => {
     try {
-        return res.status(200).json({
-            success: true,
-            message: SUCCESS_MESSAGES.LOGOUT,
-            data: {},
-        });
+        return successResponse(res, 200, SUCCESS_MESSAGES.LOGOUT, {});
     } catch (error) {
         next(error);
     }

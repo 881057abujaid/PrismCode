@@ -9,6 +9,7 @@
 
 import * as reviewService from "./review.service.js";
 import { SUCCESS_MESSAGES } from "../../shared/constants/messages.js";
+import { successResponse } from "../../shared/responses/apiResponse.js";
 
 // @desc    Generate review for a code
 // @route   POST /api/v1/review/generate-review
@@ -22,11 +23,7 @@ export const generateProjectReview = async (req, res, next) => {
         const project = await reviewService.generateProjectReview(projectId, req.user._id);
 
         // Send response
-        return res.status(200).json({
-            success: true,
-            message: SUCCESS_MESSAGES.REVIEW_GENERATED,
-            data: project,
-        });
+        return successResponse(res, 200, SUCCESS_MESSAGES.REVIEW_GENERATED, project);
 
     } catch (error) {
         next(error);

@@ -8,40 +8,28 @@
 */
 
 import { ZodError } from "zod";
+import { errorResponse } from "../responses/apiResponse";
 
 const errorHandler = (err, req, res, next) => {
     console.error(err);
 
     // Zod Validation Error
     if (err instanceof ZodError) {
-        return res.status(400).json({
-            success: false,
-            message: "Validation failed",
-            errors: err.errors,
-        });
+        return errorResponse(res, 400, "Validation failed", err.errors);
     }
 
     // Mongoose Validation Error
     if (err.name === "ValidationError") {
-        return res.json(400).json({
-            success: false,
-            message: err.message,
-        });
+        return errorResponse(res, 400, err.message);
     }
 
     // Duplicate Key Error
     if (err.code === 11000) {
-        return res.status(400).json({
-            success: false,
-            message
-        });
+        return errorResponse(res, 400, err.message);
     }
 
     // Default Error
-    return res.status(err.status || 500).json({
-        success: false,
-        message: err.message || "Internal Server Error",
-    });
+    return errorResponse(res, err.status || 500, err.message || "Internal Server Error");
 };
 
 export default errorHandler;
