@@ -5,6 +5,8 @@
  * 
  * @module review
  * @requires review.service
+ * @requires ../shared/constants/messages
+ * @requires ../shared/responses/apiResponse
 */
 
 import * as reviewService from "./review.service.js";

@@ -7,6 +7,7 @@
  * @requires bcryptjs
  * @requires ../auth/user.model
  * @requires ../utils/generateToken
+ * @requires ../shared/constants/messages
 */
 
 import bcrypt from "bcryptjs";

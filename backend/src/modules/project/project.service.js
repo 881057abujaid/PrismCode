@@ -5,7 +5,9 @@
  * 
  * @module project
  * @requires project.model
- */
+ * @requires ../../utils/invalidateReview
+ * @requires ../shared/constants/messages
+*/
 
 import { invalidateProjectReview } from "../../utils/invalidateReview.js";
 import Project from "./project.model.js";

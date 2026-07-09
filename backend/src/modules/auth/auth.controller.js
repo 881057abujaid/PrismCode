@@ -6,6 +6,8 @@
  * @module auth
  * @requires auth.validation
  * @requires auth.service
+ * @requires ../shared/constants/messages
+ * @requires ../shared/responses/apiResponse
 */
 
 import { loginSchema, registerSchema } from "./auth.validation.js";

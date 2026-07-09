@@ -8,7 +8,7 @@
 */
 
 import { ZodError } from "zod";
-import { errorResponse } from "../responses/apiResponse";
+import { errorResponse } from "../responses/apiResponse.js";
 
 const errorHandler = (err, req, res, next) => {
     console.error(err);

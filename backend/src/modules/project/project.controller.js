@@ -6,7 +6,8 @@
  * @module project
  * @requires project.service
  * @requires project.validation
- */
+ * @requires ../shared/constants/messages
+*/
 
 import { createProjectSchema } from "./project.validation.js";
 import * as projectService from "./project.service.js";

@@ -6,6 +6,8 @@
  * @module auth
  * @requires jsonwebtoken
  * @requires ../auth/user.model
+ * @requires ../shared/constants/messages
+ * @requires ../shared/responses/apiResponse
 */
 
 import jwt from "jsonwebtoken";
