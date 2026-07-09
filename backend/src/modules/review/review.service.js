@@ -18,6 +18,7 @@ import { ERROR_MESSAGES } from "../../shared/constants/messages.js";
 import { ROLES } from "../../shared/constants/role.js";
 import { PROJECT_STATUS } from "../../shared/constants/projectStatus.js";
 import { buildReviewPrompt } from "../../shared/prompts/review.prompt.js";
+import AppError from "../../shared/errors/AppError.js";
 
 // @desc    Test Groq connection
 // @route   GET /api/v1/review/test-groq
@@ -62,12 +63,12 @@ export const generateProjectReview = async (projectId, userId) => {
     // Check project existence
     const project = await Project.findById(projectId);
     if (!project) {
-        throw new Error(ERROR_MESSAGES.PROJECT_NOT_FOUND);
+        throw new AppError(ERROR_MESSAGES.PROJECT_NOT_FOUND, 404);
     }
 
     // Ownership Check
     if (project.createdBy.toString() !== userId.toString()) {
-        throw new Error(ERROR_MESSAGES.NOT_AUTHORIZED);
+        throw new AppError(ERROR_MESSAGES.NOT_AUTHORIZED, 403);
     }
 
     // Check if review already exists
@@ -88,4 +89,4 @@ export const generateProjectReview = async (projectId, userId) => {
 
     // Return review
     return project;
-}
+};

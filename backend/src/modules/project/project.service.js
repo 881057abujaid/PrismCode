@@ -12,18 +12,14 @@
 import { invalidateProjectReview } from "../../utils/invalidateReview.js";
 import Project from "./project.model.js";
 import { ERROR_MESSAGES } from "../../shared/constants/messages.js";
-
+import AppError from "../../shared/errors/AppError.js";
 
 // @desc    Create a new project
 // @route   POST /api/v1/projects
 // @access  Private
 export const createProject = async (projectData) => {
-    try {
-        const project = await Project.create(projectData);
-        return project;
-    } catch (error) {
-        throw error;
-    }
+    const project = await Project.create(projectData);
+    return project;
 };
 
 
@@ -31,50 +27,44 @@ export const createProject = async (projectData) => {
 // @route   GET /api/v1/projects
 // @access  Private
 export const getAllProjects = async ({ createdBy }) => {
-    try {
-        // Find all projects
-        const projects = await Project.find({
-            createdBy
-        });
 
-        // Filter out deleted projects
-        const activeProjects = projects.filter(project => !project.isDeleted);
+    // Find all projects
+    const projects = await Project.find({
+        createdBy
+    });
 
-        // Send response
-        return activeProjects;
-    } catch (error) {
-        throw error;
-    }
+    // Filter out deleted projects
+    const activeProjects = projects.filter(project => !project.isDeleted);
+
+    // Send response
+    return activeProjects;
 };
 
 // @desc    Get a project by ID
 // @route   GET /api/v1/projects/:projectId
 // @access  Private
 export const getProject = async (projectId, userId) => {
-    try {
-        // Find the project
-        const project = await Project.findById(projectId);
 
-        // Check if project exists
-        if (!project) {
-            throw new Error(ERROR_MESSAGES.PROJECT_NOT_FOUND);
-        }
+    // Find the project
+    const project = await Project.findById(projectId);
 
-        // Check if Project is Deleted
-        if (project.isDeleted) {
-            throw new Error(ERROR_MESSAGES.PROJECT_IS_DELETED);
-        }
-
-        // Check Ownership
-        if (project.createdBy.toString() !== userId.toString()) {
-            throw new Error(ERROR_MESSAGES.NOT_AUTHORIZED);
-        }
-
-        // Send response
-        return project;
-    } catch (error) {
-        throw error;
+    // Check if project exists
+    if (!project) {
+        throw new Error(ERROR_MESSAGES.PROJECT_NOT_FOUND);
     }
+
+    // Check if Project is Deleted
+    if (project.isDeleted) {
+        throw new Error(ERROR_MESSAGES.PROJECT_IS_DELETED);
+    }
+
+    // Check Ownership
+    if (project.createdBy.toString() !== userId.toString()) {
+        throw new Error(ERROR_MESSAGES.NOT_AUTHORIZED);
+    }
+
+    // Send response
+    return project;
 };
 
 // @desc    Update a project

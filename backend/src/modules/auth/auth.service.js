@@ -14,13 +14,14 @@ import bcrypt from "bcryptjs";
 import User from "../auth/user.model.js";
 import generateToken from "../../utils/generateToken.js";
 import { ERROR_MESSAGES } from "../../shared/constants/messages.js";
+import AppError from "../../shared/errors/AppError.js";
 
 export const registerUser = async (userData) => {
     // Existing user check
     const existingUser = await User.findOne({ email: userData.email });
 
     if (existingUser) {
-        throw new Error(ERROR_MESSAGES.USER_ALREADY_EXISTS);
+        throw new AppError(ERROR_MESSAGES.USER_ALREADY_EXISTS, 400);
     }
 
     // Password hashing
@@ -41,7 +42,7 @@ export const loginUser = async (userData) => {
     const user = await User.findOne({ email: userData.email }).select("+password");
 
     if (!user) {
-        throw new Error(ERROR_MESSAGES.INVALID_CREDENTIALS);
+        throw new AppError(ERROR_MESSAGES.INVALID_CREDENTIALS, 401);
     }
 
     // Check Password
@@ -51,7 +52,7 @@ export const loginUser = async (userData) => {
     );
 
     if (!isPasswordMatched) {
-        throw new Error(ERROR_MESSAGES.INVALID_CREDENTIALS);
+        throw new AppError(ERROR_MESSAGES.INVALID_CREDENTIALS, 401);
     }
 
     // Generate JWT Token
@@ -75,7 +76,7 @@ export const logoutUser = async (userId) => {
     const user = await User.findById(userId);
 
     if (!user) {
-        throw new Error(ERROR_MESSAGES.USER_NOT_FOUND);
+        throw new AppError(ERROR_MESSAGES.USER_NOT_FOUND, 404);
     }
 
     // Return user
