@@ -8,6 +8,7 @@
 */
 
 import * as reviewService from "./review.service.js";
+import { SUCCESS_MESSAGES } from "../../shared/constants/messages.js";
 
 // @desc    Generate review for a code
 // @route   POST /api/v1/review/generate-review
@@ -23,7 +24,7 @@ export const generateProjectReview = async (req, res, next) => {
         // Send response
         return res.status(200).json({
             success: true,
-            message: "Review generated successfully.",
+            message: SUCCESS_MESSAGES.REVIEW_GENERATED,
             data: project,
         });
 

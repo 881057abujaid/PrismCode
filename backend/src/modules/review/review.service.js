@@ -10,6 +10,9 @@
 
 import { getGroqClient } from "../../config/groq.js";
 import Project from "../project/project.model.js";
+import { ERROR_MESSAGES } from "../../shared/constants/messages.js";
+import { ROLES } from "../../shared/constants/role.js";
+import { PROJECT_STATUS } from "../../shared/constants/projectStatus.js";
 
 // @desc    Test Groq connection
 // @route   GET /api/v1/review/test-groq
@@ -20,7 +23,7 @@ export const testGroqConnection = async () => {
         model: "llama-3.3-70b-versatile",
         messages: [
             {
-                role: "user",
+                role: ROLES.USER,
                 content: "Reply with only: PrismCode Connected",
             },
         ],
@@ -91,7 +94,7 @@ export const generateReview = async (language, code) => {
 
         messages: [
             {
-                role: "user",
+                role: ROLES.USER,
                 content: prompt
             }
         ],
@@ -105,12 +108,12 @@ export const generateProjectReview = async (projectId, userId) => {
     // Check project existence
     const project = await Project.findById(projectId);
     if (!project) {
-        throw new Error("Project not found");
+        throw new Error(ERROR_MESSAGES.PROJECT_NOT_FOUND);
     }
 
     // Ownership Check
     if (project.createdBy.toString() !== userId.toString()) {
-        throw new Error("You are not authorized to review this project");
+        throw new Error(ERROR_MESSAGES.NOT_AUTHORIZED);
     }
 
     // Check if review already exists
@@ -124,7 +127,7 @@ export const generateProjectReview = async (projectId, userId) => {
     // Update project with review
     project.review = review;
     project.reviewedAt = new Date();
-    project.status = "reviewed";
+    project.status = PROJECT_STATUS.REVIEWED;
 
     // Save project
     await project.save();

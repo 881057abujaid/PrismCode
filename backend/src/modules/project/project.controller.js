@@ -10,6 +10,7 @@
 
 import { createProjectSchema } from "./project.validation.js";
 import * as projectService from "./project.service.js";
+import { SUCCESS_MESSAGES } from "../../shared/constants/messages.js";
 
 // @desc    Create a new project
 // @route   POST /api/v1/projects
@@ -28,7 +29,7 @@ export const createProject = async (req, res, next) => {
         // Send response
         res.status(201).json({
             success: true,
-            message: "Project created successfully.",
+            message: SUCCESS_MESSAGES.PROJECT_CREATED,
             data: project,
         });
     } catch (error) {
@@ -49,7 +50,7 @@ export const getProjects = async (req, res, next) => {
         // Send response
         res.status(200).json({
             success: true,
-            message: "Projects fetched successfully.",
+            message: SUCCESS_MESSAGES.PROJECTS_FETCHED,
             data: projects,
         });
     } catch (error) {
@@ -68,7 +69,7 @@ export const getProject = async (req, res, next) => {
         // Send Response
         res.status(200).json({
             success: true,
-            message: "Project fetched successfully.",
+            message: SUCCESS_MESSAGES.PROJECT_FETCHED,
             data: project,
         });
     } catch (error) {
@@ -91,7 +92,7 @@ export const updateProject = async (req, res, next) => {
         // Send Response
         res.status(200).json({
             success: true,
-            message: "Project updated successfully.",
+            message: SUCCESS_MESSAGES.PROJECT_UPDATED,
             data: project,
         });
     } catch (error) {
@@ -110,7 +111,7 @@ export const deleteProject = async (req, res, next) => {
         // Send Response
         res.status(200).json({
             success: true,
-            message: "Project deleted successfully.",
+            message: SUCCESS_MESSAGES.PROJECT_DELETED,
             data: project,
         });
     } catch (error) {

@@ -10,6 +10,7 @@
 
 import { loginSchema, registerSchema } from "./auth.validation.js";
 import * as authService from "./auth.service.js";
+import { SUCCESS_MESSAGES } from "../../shared/constants/messages.js";
 
 // @desc    Register a new user
 // @route   POST /api/v1/auth/register
@@ -22,7 +23,7 @@ export const register = async (req, res, next) => {
 
         return res.status(201).json({
             success: true,
-            message: "Account created successfully.",
+            message: SUCCESS_MESSAGES.ACCOUNT_CREATED,
             data: {
                 id: user._id,
                 name: user.name,
@@ -45,7 +46,7 @@ export const login = async (req, res, next) => {
 
         return res.status(200).json({
             success: true,
-            message: "Login successful.",
+            message: SUCCESS_MESSAGES.LOGIN,
             data: {
                 token,
                 user: {
@@ -54,6 +55,21 @@ export const login = async (req, res, next) => {
                     email: user.email,
                 },
             },
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Logout user
+// @route   POST /api/v1/auth/logout
+// @access  Private
+export const logout = async (req, res, next) => {
+    try {
+        return res.status(200).json({
+            success: true,
+            message: SUCCESS_MESSAGES.LOGOUT,
+            data: {},
         });
     } catch (error) {
         next(error);

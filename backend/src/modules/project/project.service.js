@@ -9,6 +9,7 @@
 
 import { invalidateProjectReview } from "../../utils/invalidateReview.js";
 import Project from "./project.model.js";
+import { ERROR_MESSAGES } from "../../shared/constants/messages.js";
 
 
 // @desc    Create a new project
@@ -54,17 +55,17 @@ export const getProject = async (projectId, userId) => {
 
         // Check if project exists
         if (!project) {
-            throw new Error("Project not found");
+            throw new Error(ERROR_MESSAGES.PROJECT_NOT_FOUND);
         }
 
         // Check if Project is Deleted
         if (project.isDeleted) {
-            throw new Error("Project is deleted");
+            throw new Error(ERROR_MESSAGES.PROJECT_IS_DELETED);
         }
 
         // Check Ownership
         if (project.createdBy.toString() !== userId.toString()) {
-            throw new Error("You are not authorized to view this project");
+            throw new Error(ERROR_MESSAGES.NOT_AUTHORIZED);
         }
 
         // Send response
@@ -81,17 +82,17 @@ export const updateProject = async (projectId, userId, updatedData) => {
     // Check Project Existence
     const project = await Project.findById(projectId);
     if (!project) {
-        throw new Error("Project not found");
+        throw new Error(ERROR_MESSAGES.PROJECT_NOT_FOUND);
     }
 
     // Check if Project is Deleted
     if (project.isDeleted) {
-        throw new Error("Project is deleted");
+        throw new Error(ERROR_MESSAGES.PROJECT_IS_DELETED);
     }
 
     // Check Ownership
     if (project.createdBy.toString() !== userId.toString()) {
-        throw new Error("You are not authorized to update this project");
+        throw new Error(ERROR_MESSAGES.NOT_AUTHORIZED);
     }
 
     // Compare Old Code and New Code
@@ -120,17 +121,17 @@ export const deleteProject = async (projectId, userId) => {
     // Check Project Existence
     const project = await Project.findById(projectId);
     if (!project) {
-        throw new Error("Project not found");
+        throw new Error(ERROR_MESSAGES.PROJECT_NOT_FOUND);
     }
 
     // Check Ownership
     if (project.createdBy.toString() !== userId.toString()) {
-        throw new Error("You are not authorized to delete this project");
+        throw new Error(ERROR_MESSAGES.NOT_AUTHORIZED);
     }
 
     // Check if Project is Already Deleted
     if (project.isDeleted) {
-        throw new Error("Project is already deleted");
+        throw new Error(ERROR_MESSAGES.PROJECT_ALREADY_DELETED);
     }
 
     // Soft Delete Project

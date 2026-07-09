@@ -9,7 +9,7 @@
 */
 
 import { Router } from "express";
-import { login, register } from "./auth.controller.js";
+import { login, logout, register } from "./auth.controller.js";
 
 const router = Router();
 
@@ -18,5 +18,8 @@ router.post("/register", register);
 
 // Login a user
 router.post("/login", login);
+
+// Logout a user
+router.post("/logout", logout);
 
 export default router;

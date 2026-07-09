@@ -12,13 +12,14 @@
 import bcrypt from "bcryptjs";
 import User from "../auth/user.model.js";
 import generateToken from "../../utils/generateToken.js";
+import { ERROR_MESSAGES } from "../../shared/constants/messages.js";
 
 export const registerUser = async (userData) => {
     // Existing user check
     const existingUser = await User.findOne({ email: userData.email });
 
     if (existingUser) {
-        throw new Error("User already exists.");
+        throw new Error(ERROR_MESSAGES.USER_ALREADY_EXISTS);
     }
 
     // Password hashing
@@ -39,7 +40,7 @@ export const loginUser = async (userData) => {
     const user = await User.findOne({ email: userData.email }).select("+password");
 
     if (!user) {
-        throw new Error("Invalid email or password.");
+        throw new Error(ERROR_MESSAGES.INVALID_CREDENTIALS);
     }
 
     // Check Password
@@ -49,10 +50,10 @@ export const loginUser = async (userData) => {
     );
 
     if (!isPasswordMatched) {
-        throw new Error("Invalid email or password.");
+        throw new Error(ERROR_MESSAGES.INVALID_CREDENTIALS);
     }
 
-    // Generate JWT Tokrn
+    // Generate JWT Token
     const token = generateToken({
         id: user._id,
         role: user.role,
@@ -63,4 +64,19 @@ export const loginUser = async (userData) => {
         user,
         token,
     };
+};
+
+// @desc Logout user
+// @route POST /api/v1/auth/logout
+// @access Private
+export const logoutUser = async (userId) => {
+    // Check user existence
+    const user = await User.findById(userId);
+
+    if (!user) {
+        throw new Error(ERROR_MESSAGES.USER_NOT_FOUND);
+    }
+
+    // Return user
+    return user;
 };

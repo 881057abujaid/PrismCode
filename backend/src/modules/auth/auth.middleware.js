@@ -10,6 +10,7 @@
 
 import jwt from "jsonwebtoken";
 import User from "./user.model.js";
+import { ERROR_MESSAGES } from "../../shared/constants/messages.js";
 
 export const protect = async (req, res, next) => {
     try {
@@ -19,7 +20,7 @@ export const protect = async (req, res, next) => {
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
             return res.status(401).json({
                 success: false,
-                message: "Authentication Required.",
+                message: ERROR_MESSAGES.AUTH_REQUIRED,
             });
         }
 
@@ -35,7 +36,7 @@ export const protect = async (req, res, next) => {
         if (!user) {
             return res.status(401).json({
                 success: false,
-                message: "User no longer exists.",
+                message: ERROR_MESSAGES.USER_NOT_FOUND,
             });
         }
 
