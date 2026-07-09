@@ -1,6 +1,8 @@
-const App = () => {
+import AppRouter from "./routes/AppRouter";
+
+function App() {
   return (
-    <h1 className="bg-background text-white border border-border">PrismCode</h1>
+    <AppRouter />
   );
 }
 
