@@ -30,9 +30,23 @@
 }
 
 @theme {
-    --color-background: #09090b;
-    --color-surface: #111827;
-    --color-primary: #06b6d4;
-    --color-secondary: #8b5cf6;
-    --color-border: #1e293b;
+    --color-background: var(--background);
+    --color-surface: var(--surface);
+    --color-surface-hover: var(--surface-hover);
+
+    --color-primary: var(--primary);
+    --color-primary-hover: var(--primary-hover);
+    --color-secondary: var(--secondary);
+    --color-secondary-hover: var(--secondary-hover);
+
+    --color-text-primary: var(--text-primary);
+    --color-text-secondary: var(--text-secondary);
+    --color-text-muted: var(--text-muted);
+
+    --color-border: var(--border);
+
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-error: var(--error);
+    --color-info: var(--info);
 }

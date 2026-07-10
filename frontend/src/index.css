@@ -1,9 +1,4 @@
-@import "tailwindcss";
-
-/* ================================
-   Tailwind CSS
-================================ */
-
+@import "./styles/fonts.css";
 @import "tailwindcss";
 
 /* ================================
@@ -11,7 +6,6 @@
 ================================ */
 
 @import "./styles/theme.css";
-@import "./styles/fonts.css";
 
 /* ================================
    CSS Reset
