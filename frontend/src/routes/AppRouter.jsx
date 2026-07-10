@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "../pages/Home/Home";
 import Login from "../pages/Auth/Login";
@@ -17,6 +17,7 @@ const AppRouter = () => {
                 <Route element={<DashboardLayout />}>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="*" element={<NotFound />} />
+                    <Route index element={<Navigate to="/dashboard" replace />} />
                 </Route>
             </Routes>
         </BrowserRouter>

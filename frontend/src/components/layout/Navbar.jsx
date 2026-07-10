@@ -1,10 +1,22 @@
-const Navbar = () => {
+const Navbar = ({ title = 'Dashboard' }) => {
     return (
-        <nav>
+        <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-border bg-surface px-8">
+            {/* Page Title */}
             <div>
-                <h1>PrismCode</h1>
+                <h2 className="text-xl font-semibold">{title}</h2>
             </div>
-        </nav>
+
+            {/* User */}
+            <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary font-semibold text-white">
+                    AR
+                </div>
+                <div>
+                    <h4 className="font-medium">Abujaid Raja</h4>
+                    <p className="text-sm text-text-secondary">Software Engineer</p>
+                </div>
+            </div>
+        </header>
     );
 }
 
