@@ -8,144 +8,146 @@
 @import "./styles/theme.css";
 
 /* ================================
-   CSS Reset
+   CSS Reset & Base Styles
 ================================ */
 
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+@layer base {
+    *,
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-/* ================================
-   Root
-================================ */
+    /* ================================
+       Root
+    ================================ */
 
-html,
-body,
-#root {
-    width: 100%;
-    min-height: 100%;
-}
+    html,
+    body,
+    #root {
+        width: 100%;
+        min-height: 100%;
+    }
 
-/* ================================
-   Body
-================================ */
+    /* ================================
+       Body
+    ================================ */
 
-body {
-    background: var(--background);
-    color: var(--text-primary);
+    body {
+        background: var(--background);
+        color: var(--text-primary);
 
-    font-family: "Plus Jakarta Sans", sans-serif;
+        font-family: "Plus Jakarta Sans", sans-serif;
 
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
 
-    overflow-x: hidden;
-}
+        overflow-x: hidden;
+    }
 
-/* ================================
-   Typography
-================================ */
+    /* ================================
+       Typography
+    ================================ */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: var(--text-primary);
-    font-weight: 700;
-}
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--text-primary);
+        font-weight: 700;
+    }
 
-p,
-span,
-small {
-    color: var(--text-secondary);
-}
+    p,
+    span,
+    small {
+        color: var(--text-secondary);
+    }
 
-/* ================================
-   Links
-================================ */
+    /* ================================
+       Links
+    ================================ */
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
 
-/* ================================
-   Lists
-================================ */
+    /* ================================
+       Lists
+    ================================ */
 
-ul,
-ol {
-    list-style: none;
-}
+    ul,
+    ol {
+        list-style: none;
+    }
 
-/* ================================
-   Images
-================================ */
+    /* ================================
+       Images
+    ================================ */
 
-img,
-svg {
-    display: block;
-    max-width: 100%;
-}
+    img,
+    svg {
+        display: block;
+        max-width: 100%;
+    }
 
-/* ================================
-   Forms
-================================ */
+    /* ================================
+       Forms
+    ================================ */
 
-button,
-input,
-textarea,
-select {
-    font: inherit;
-}
+    button,
+    input,
+    textarea,
+    select {
+        font: inherit;
+    }
 
-button {
-    cursor: pointer;
-    border: none;
-    background: none;
-}
+    button {
+        cursor: pointer;
+        border: none;
+        background: none;
+    }
 
-input,
-textarea,
-select {
-    outline: none;
-    border: none;
-    background: transparent;
-}
+    input,
+    textarea,
+    select {
+        outline: none;
+        border: none;
+        background: transparent;
+    }
 
-/* ================================
-   Selection
-================================ */
+    /* ================================
+       Selection
+    ================================ */
 
-::selection {
-    background: var(--primary);
-    color: white;
-}
+    ::selection {
+        background: var(--primary);
+        color: white;
+    }
 
-/* ================================
-   Scrollbar
-================================ */
+    /* ================================
+       Scrollbar
+    ================================ */
 
-::-webkit-scrollbar {
-    width: 8px;
-}
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
 
-::-webkit-scrollbar-track {
-    background: var(--background);
-}
+    ::-webkit-scrollbar-track {
+        background: var(--background);
+    }
 
-::-webkit-scrollbar-thumb {
-    background: var(--surface-hover);
-    border-radius: 999px;
-}
+    ::-webkit-scrollbar-thumb {
+        background: var(--surface-hover);
+        border-radius: 999px;
+    }
 
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary);
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary);
+    }
 }

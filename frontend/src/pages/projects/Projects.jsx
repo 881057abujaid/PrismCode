@@ -1,9 +1,68 @@
-const Project = () => {
+import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+
+import { getProjects } from "../../services/project.service";
+import Loader from "../../components/common/Loader";
+
+const Projects = () => {
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const response = await getProjects();
+                setProjects(response.data);
+                toast.success("projects fetched successfully!");
+            } catch (error) {
+                toast.error(error?.response?.data?.message || "Error fetching projects");
+            } finally {
+                setLoading(false);
+            };
+        };
+        fetchProjects();
+    }, []);
+
+    if (loading) {
+        return <Loader />;
+    }
+
     return (
-        <div>
-            <h1>Project Page</h1>
-        </div>
+        <section className="p-8">
+            <div className="mb-8">
+                <h1 className="text-2xl font-bold text-text-primary">Projects</h1>
+                <p className="mt-2 text-text-secondary">Manage your code review projects.</p>
+            </div>
+
+            <Link
+                to="/projects/new"
+                className="rounded-xl bg-primary px-4 py-3 font-medium text-white"
+            >
+                Create Project
+            </Link>
+
+            {projects.length === 0 ? (
+                <p className="text-text-secondary">
+                    No projects found.
+                </p>
+            ) : (
+                <div className="grid gap-4">
+                    {projects.map((project) => (
+                        <div
+                            key={project._id}
+                            className="rounded-xl border border-border bg-surface p-5"
+                        >
+                            <h2 className="font-semibold text-text-primary">{project.title}</h2>
+                            <p className="mt-2 text-sm text-text-secondary">{project.description}</p>
+                            <p className="text-green-500">{project.language}</p>
+                            <p className="text-green-500">{project.code}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </section>
     );
 };
 
-export default Project;
+export default Projects;
