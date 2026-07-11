@@ -11,6 +11,8 @@ import Project from "../pages/projects/Projects";
 import Settings from "../pages/settings/settings";
 import AuthLayout from "../layouts/AuthLayout";
 import CreateProject from "../pages/projects/CreateProject";
+import ProjectDetails from "../pages/projects/ProjectDetails";
+import EditProject from "../pages/projects/EditProject";
 
 const AppRouter = () => {
     return (
@@ -30,6 +32,8 @@ const AppRouter = () => {
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/projects" element={<Project />} />
                         <Route path="/projects/new" element={<CreateProject />} />
+                        <Route path="/projects/:projectId" element={<ProjectDetails />} />
+                        <Route path="/projects/:projectId/edit" element={<EditProject />} />
                         <Route path="/settings" element={<Settings />} />
                         <Route path="/" element={<Navigate to="/dashboard" replace />} />
                     </Route>

@@ -49,15 +49,16 @@ const Projects = () => {
             ) : (
                 <div className="grid gap-4">
                     {projects.map((project) => (
-                        <div
+                        <Link
                             key={project._id}
-                            className="rounded-xl border border-border bg-surface p-5"
+                            to={`/projects/${project._id}`}
+                            className="block rounded-xl border border-border bg-surface p-5 transition-colors duration-200 hover:bg-surface-hove"
                         >
                             <h2 className="font-semibold text-text-primary">{project.title}</h2>
-                            <p className="mt-2 text-sm text-text-secondary">{project.description}</p>
+                            <p className="mt-2 text-sm text-text-secondary">{project.description || "No description privided."}</p>
                             <p className="text-green-500">{project.language}</p>
                             <p className="text-green-500">{project.code}</p>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             )}

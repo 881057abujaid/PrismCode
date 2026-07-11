@@ -9,8 +9,8 @@ const ProjectForm = ({
     defaultValues = {
         title: "",
         description: "",
-        language: "",
         code: "",
+        language: "",
     },
     onSubmit,
     submitText = "Create Project",
@@ -25,8 +25,17 @@ const ProjectForm = ({
         mode: "onBlur",
     });
 
+    const handleValidSubmit = (data) => {
+        console.log("FORM VALID:", data);
+        return onSubmit(data);
+    };
+
+    const handleInvalidSubmit = (errors) => {
+        console.log("FORM INVALID:", errors);
+    };
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(handleValidSubmit, handleInvalidSubmit)} className="space-y-5">
             <Input
                 id="title"
                 label="Project Title"
@@ -46,18 +55,30 @@ const ProjectForm = ({
             <Input
                 id="language"
                 label="Language"
-                placeholder="Enter programming language"
+                placeholder="Enter language"
                 {...register("language")}
                 error={errors.language?.message}
             />
 
-            <Input
-                id="code"
-                label="Code"
-                placeholder="Enter code"
-                {...register("code")}
-                error={errors.code?.message}
-            />
+            <div className="flex flex-col gap-2">
+                <label
+                    htmlFor="code"
+                    className="text-sm font-medium text-text-primary"
+                >
+                    Code
+                </label>
+                <textarea
+                    id="code"
+                    rows={12}
+                    {...register("code")}
+                    error={errors.code?.message}
+                    placeholder="Write your code here..."
+                    className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-text-primary placeholder:text-text-muted focus:border:-primary resize-none"
+                />
+                {errors.code && (
+                    <p className="text-xs text-error-light ml-2">{errors.code.message}</p>
+                )}
+            </div>
 
             <Button
                 type="submit"
