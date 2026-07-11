@@ -8,6 +8,7 @@ import Loader from "../../components/common/Loader";
 const Projects = () => {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -16,7 +17,9 @@ const Projects = () => {
                 setProjects(response.data);
                 toast.success("projects fetched successfully!");
             } catch (error) {
-                toast.error(error?.response?.data?.message || "Error fetching projects");
+                const message = error?.response?.data?.message || "Error fetching projects";
+                toast.error(message);
+                setError(message);
             } finally {
                 setLoading(false);
             };
@@ -25,7 +28,17 @@ const Projects = () => {
     }, []);
 
     if (loading) {
-        return <Loader />;
+        return <Loader text="Loading projects..." />;
+    }
+
+    if (error) {
+        return (
+            <div className="flex min-h-64 items-centet justify-center">
+                <p className="text-sm text-error">
+                    {error}
+                </p>
+            </div>
+        );
     }
 
     return (

@@ -44,7 +44,7 @@ const ProjectDetails = () => {
     }
 
     if (loading) {
-        return <Loader />
+        return <Loader text="Loading project..." />
     }
 
     if (!project) {
