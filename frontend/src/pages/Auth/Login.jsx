@@ -31,6 +31,8 @@ const Login = () => {
         try {
             const response = await loginUser(data);
 
+            console.log("LOGIN RESPONSE:", response);
+
             login({
                 user: response.data.user,
                 token: response.data.token
