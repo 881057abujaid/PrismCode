@@ -31,7 +31,7 @@ router.use("/auth", authRoutes);
 router.use("/projects", projectRoutes);
 
 // Review routes
-router.use("/reviews", reviewRoutes);
+router.use("/projects/:projectId/reviews", reviewRoutes);
 
 export default function registerRoutes(app) {
     app.use("/api/v1", router);

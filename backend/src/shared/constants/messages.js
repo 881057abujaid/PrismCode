@@ -7,7 +7,8 @@ export const SUCCESS_MESSAGES = {
     PROJECT_DELETED: "Project deleted successfully.",
     PROJECT_FETCHED: "Project fetched successfully.",
     PROJECTS_FETCHED: "Projects fetched successfully.",
-    REVIEW_GENERATED: "Review generated successfully.",
+    REVIEWS_FETCHED: "Reviews fetched successfully.",
+    REVIEW_FETCHED: "Review fetched successfully.",
 };
 
 export const ERROR_MESSAGES = {
@@ -18,6 +19,7 @@ export const ERROR_MESSAGES = {
     PROJECT_REVIEW_GENERATED: "Review already generated.",
     AUTH_REQUIRED: "Authorization required.",
     USER_NOT_FOUND: "User not found.",
+    REVIEW_NOT_FOUND: "Review not found.",
     USER_ALREADY_EXISTS: "User already exists.",
     INVALID_CREDENTIALS: "Invalid email or password.",
 };

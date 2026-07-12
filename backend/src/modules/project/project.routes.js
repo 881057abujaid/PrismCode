@@ -10,8 +10,13 @@
  */
 
 import { Router } from "express";
-import { createProject, getProjects, updateProject, getProject, deleteProject } from "./project.controller.js";
-import { generateProjectReview } from "../review/review.controller.js";
+import {
+    createProject,
+    getProjects,
+    updateProject,
+    getProject,
+    deleteProject
+} from "./project.controller.js";
 import { protect } from "../auth/auth.middleware.js";
 
 const router = Router();
@@ -24,9 +29,6 @@ router.get("/", protect, getProjects);
 
 // Get Project by Id
 router.get("/:projectId", protect, getProject);
-
-// Generate review for a project
-router.post("/:projectId/review", protect, generateProjectReview);
 
 // Update a project
 router.put("/:projectId", protect, updateProject);

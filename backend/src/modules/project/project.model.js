@@ -9,56 +9,45 @@
 
 import mongoose from "mongoose";
 
-const projectSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-        trim: true,
-        maxlength: 100,
+const projectSchema = new mongoose.Schema(
+    {
+        title: {
+            type: String,
+            required: true,
+            trim: true,
+            maxlength: 100,
+        },
+
+        description: {
+            type: String,
+            trim: true,
+            default: "",
+        },
+
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
+
+        deletedAt: {
+            type: Date,
+            default: null,
+        },
+
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
     },
-    description: {
-        type: String,
-        trim: true,
-        default: "",
-    },
-    language: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    code: {
-        type: String,
-        required: true,
-    },
-    review: {
-        type: String,
-        default: "",
-    },
-    reviewedAt: {
-        type: Date,
-        default: null,
-    },
-    status: {
-        type: String,
-        enum: ["pending", "reviewed"],
-        default: "pending",
-    },
-    isDeleted: {
-        type: Boolean,
-        default: false,
-    },
-    deletedAt: {
-        type: Date,
-        default: null,
-    },
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        default: null,
-    },
-},
-    { timestamps: true }
+    {
+        timestamps: true,
+    }
 );
 
-const Project = mongoose.model("Project", projectSchema);
+const Project = mongoose.model(
+    "Project",
+    projectSchema
+);
+
 export default Project;

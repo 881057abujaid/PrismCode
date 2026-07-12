@@ -1,47 +1,33 @@
 /**
  * review.service.js
- * 
+ *
  * Services for review-related operations.
- * 
+ *
  * @module review
  * @requires ../config/groq
+ * @requires ./review.model
  * @requires ../project/project.model
  * @requires ../shared/prompts/review.prompt
  * @requires ../shared/constants/messages
  * @requires ../shared/constants/role
- * @requires ../shared/constants/projectStatus
-*/
+ * @requires ../shared/errors/AppError
+ */
 
 import { getGroqClient } from "../../config/groq.js";
+
+import Review from "./review.model.js";
 import Project from "../project/project.model.js";
+
 import { ERROR_MESSAGES } from "../../shared/constants/messages.js";
 import { ROLES } from "../../shared/constants/role.js";
-import { PROJECT_STATUS } from "../../shared/constants/projectStatus.js";
 import { buildReviewPrompt } from "../../shared/prompts/review.prompt.js";
 import AppError from "../../shared/errors/AppError.js";
+import { REVIEW_STATUS } from "../../shared/constants/reviewStatus.js";
 
-// @desc    Test Groq connection
-// @route   GET /api/v1/review/test-groq
-// @access  Private
-export const testGroqConnection = async () => {
-    const groq = getGroqClient();
-    const response = await groq.chat.completions.create({
-        model: "llama-3.3-70b-versatile",
-        messages: [
-            {
-                role: ROLES.USER,
-                content: "Reply with only: PrismCode Connected",
-            },
-        ],
-    });
-    return response?.choices?.[0]?.message?.content;
-};
-
-// @desc    Generate review for a given code
-// @route   POST /api/v1/review/generate-review
-// @access  Private
+// @desc    Generate AI review for given code
 export const generateReview = async (language, code) => {
     const groq = getGroqClient();
+
     const prompt = buildReviewPrompt(code, language);
 
     const response = await groq.chat.completions.create({
@@ -50,43 +36,112 @@ export const generateReview = async (language, code) => {
         messages: [
             {
                 role: ROLES.USER,
-                content: prompt
-            }
+                content: prompt,
+            },
         ],
+
         temperature: 0.3,
     });
 
     return response?.choices?.[0]?.message?.content;
 };
 
-export const generateProjectReview = async (projectId, userId) => {
-    // Check project existence
-    const project = await Project.findById(projectId);
+// @desc    Create and generate a review for a project
+export const createProjectReview = async ({
+    projectId,
+    language,
+    code,
+    userId,
+}) => {
+    // Verify project existence and ownership
+    const project = await Project.findOne({
+        _id: projectId,
+        createdBy: userId,
+        isDeleted: false,
+    });
+
+    if (!project) {
+        throw new AppError(
+            ERROR_MESSAGES.PROJECT_NOT_FOUND,
+            404
+        );
+    }
+
+    // Create pending review
+    const review = await Review.create({
+        projectId,
+        language,
+        code,
+        createdBy: userId,
+        status: REVIEW_STATUS.PENDING,
+    });
+
+    try {
+        // Generate AI review from Groq
+        const aiReview = await generateReview(
+            language,
+            code
+        );
+
+        // Update review
+        review.review = aiReview;
+        review.status = REVIEW_STATUS.REVIEWED;
+        review.reviewedAt = new Date();
+
+        await review.save();
+
+        return review;
+    } catch (error) {
+        review.status = REVIEW_STATUS.FAILED;
+
+        await review.save();
+
+        throw error;
+    }
+};
+
+// @desc    Get all reviews for a project
+export const getProjectReviews = async (projectId, userId) => {
+    // Verify project existence and ownership
+    const project = await Project.findOne({
+        _id: projectId,
+        createdBy: userId,
+        isDeleted: false,
+    });
+
     if (!project) {
         throw new AppError(ERROR_MESSAGES.PROJECT_NOT_FOUND, 404);
     }
 
-    // Ownership Check
-    if (project.createdBy.toString() !== userId.toString()) {
-        throw new AppError(ERROR_MESSAGES.NOT_AUTHORIZED, 403);
-    }
-
-    // Check if review already exists
-    if (project.review) {
-        return project;
-    }
-
-    // Generate AI Review from GROQ
-    const review = await generateReview(project.language, project.code);
-
-    // Update project with review
-    project.review = review;
-    project.reviewedAt = new Date();
-    project.status = PROJECT_STATUS.REVIEWED;
-
-    // Save project
-    await project.save();
-
-    // Return review
-    return project;
+    const reviews = await Review.find({
+        projectId,
+        createdBy: userId,
+    }).sort({
+        createdAt: -1,
+    });
+    return reviews;
 };
+
+export const getReviewById = async ({ projectId, reviewId, userId }) => {
+    // Verify project existence and ownership
+    const project = await Project.findOne({
+        _id: projectId,
+        createdBy: userId,
+        isDeleted: false,
+    });
+
+    if (!project) {
+        throw new AppError(ERROR_MESSAGES.PROJECT_NOT_FOUND, 404);
+    }
+
+    const review = await Review.findOne({
+        _id: reviewId,
+        projectId,
+        createdBy: userId
+    });
+
+    if (!review) {
+        throw new AppError(ERROR_MESSAGES.REVIEW_NOT_FOUND, 404);
+    }
+    return review;
+}

@@ -9,8 +9,6 @@ const ProjectForm = ({
     defaultValues = {
         title: "",
         description: "",
-        code: "",
-        language: "",
     },
     onSubmit,
     submitText = "Create Project",
@@ -51,34 +49,6 @@ const ProjectForm = ({
                 {...register("description")}
                 error={errors.description?.message}
             />
-
-            <Input
-                id="language"
-                label="Language"
-                placeholder="Enter language"
-                {...register("language")}
-                error={errors.language?.message}
-            />
-
-            <div className="flex flex-col gap-2">
-                <label
-                    htmlFor="code"
-                    className="text-sm font-medium text-text-primary"
-                >
-                    Code
-                </label>
-                <textarea
-                    id="code"
-                    rows={12}
-                    {...register("code")}
-                    error={errors.code?.message}
-                    placeholder="Write your code here..."
-                    className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-text-primary placeholder:text-text-muted focus:border:-primary resize-none"
-                />
-                {errors.code && (
-                    <p className="text-xs text-error-light ml-2">{errors.code.message}</p>
-                )}
-            </div>
 
             <Button
                 type="submit"

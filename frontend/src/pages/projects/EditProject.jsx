@@ -81,8 +81,6 @@ const EditProject = () => {
                     defaultValues={{
                         title: project.title,
                         description: project.description || "",
-                        language: project.language || "",
-                        code: project.code || "",
                     }}
                     onSubmit={handleUpdateProject}
                     submitText="Save Changes"
