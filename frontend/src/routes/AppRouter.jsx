@@ -13,6 +13,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import CreateProject from "../pages/projects/CreateProject";
 import ProjectDetails from "../pages/projects/ProjectDetails";
 import EditProject from "../pages/projects/EditProject";
+import ReviewDetails from "../pages/reviews/ReviewDetails";
 
 const AppRouter = () => {
     return (
@@ -34,6 +35,7 @@ const AppRouter = () => {
                         <Route path="/projects/new" element={<CreateProject />} />
                         <Route path="/projects/:projectId" element={<ProjectDetails />} />
                         <Route path="/projects/:projectId/edit" element={<EditProject />} />
+                        <Route path="/projects/:projectId/reviews/:reviewId" element={<ReviewDetails />} />
                         <Route path="/settings" element={<Settings />} />
                         <Route path="/" element={<Navigate to="/dashboard" replace />} />
                     </Route>

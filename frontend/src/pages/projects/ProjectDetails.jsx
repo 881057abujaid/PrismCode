@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import { getProjectById, deleteProject } from "../../services/project.service";
 import Loader from "../../components/common/Loader";
 import Button from "../../components/ui/Button";
+import ReviewWorkspace from "../../components/reviews/ReviewWorkspace";
+import ReviewHistory from "../../components/reviews/ReviewHistory";
 
 const ProjectDetails = () => {
     const { projectId } = useParams();
@@ -12,6 +14,7 @@ const ProjectDetails = () => {
 
     const [project, setProject] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [reviewRefreshKey, setReviewRefreshKey] = useState(0);
 
     useEffect(() => {
         const fetchProject = async () => {
@@ -72,6 +75,15 @@ const ProjectDetails = () => {
             >
                 Delete Project
             </Button>
+
+            <ReviewWorkspace
+                projectId={project._id}
+                onReviewCreated={() => setReviewRefreshKey((key) => key + 1)}
+            />
+            <ReviewHistory
+                projectId={project._id}
+                refreshKey={reviewRefreshKey}
+            />
 
             <div className="rounded-xl border border-border bg-surface p-6">
                 <p className="text-sm text-text-secondary">Project ID</p>
