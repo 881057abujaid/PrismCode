@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-const Input = forwardRef(
+const Textarea = forwardRef(
     (
         {
             label,
@@ -11,7 +11,7 @@ const Input = forwardRef(
         },
         ref
     ) => {
-        const inputId = props.id || props.name;
+        const textareaId = props.id || props.name;
 
         const borderClass = error
             ? `
@@ -35,7 +35,7 @@ const Input = forwardRef(
 
                 {label && (
                     <label
-                        htmlFor={inputId}
+                        htmlFor={textareaId}
                         className="
                             flex items-center
                             text-[10px]
@@ -56,19 +56,25 @@ const Input = forwardRef(
                     </label>
                 )}
 
-                {/* Input */}
+                {/* Textarea */}
 
-                <input
+                <textarea
                     ref={ref}
-                    id={inputId}
+                    id={textareaId}
                     className={`
+                        min-h-36
                         w-full
+                        resize-y
+
                         rounded-xl
                         border
                         bg-[#030914]/70
+
                         px-4
                         py-3
+
                         text-sm
+                        leading-relaxed
                         text-text-primary
                         caret-primary
 
@@ -110,6 +116,6 @@ const Input = forwardRef(
     }
 );
 
-Input.displayName = "Input";
+Textarea.displayName = "Textarea";
 
-export default Input;
+export default Textarea;

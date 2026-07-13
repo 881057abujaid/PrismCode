@@ -14,10 +14,13 @@ import CreateProject from "../pages/projects/CreateProject";
 import ProjectDetails from "../pages/projects/ProjectDetails";
 import EditProject from "../pages/projects/EditProject";
 import ReviewDetails from "../pages/reviews/ReviewDetails";
+import Home from "../pages/Home/Home";
+import ScrollToTop from "../components/common/ScrollToTop";
 
 const AppRouter = () => {
     return (
         <BrowserRouter>
+            <ScrollToTop />
             <Routes>
                 {/* Public Routes */}
                 <Route element={<PublicRoutes />}>
@@ -37,10 +40,9 @@ const AppRouter = () => {
                         <Route path="/projects/:projectId/edit" element={<EditProject />} />
                         <Route path="/projects/:projectId/reviews/:reviewId" element={<ReviewDetails />} />
                         <Route path="/settings" element={<Settings />} />
-                        <Route path="/" element={<Navigate to="/dashboard" replace />} />
                     </Route>
                 </Route>
-
+                <Route path="/" element={<Home />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>

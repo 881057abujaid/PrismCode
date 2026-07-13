@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderGit2, Settings, Trash2 } from "lucide-react";
+import { LayoutDashboard, FolderGit2 } from "lucide-react";
 
 export const navigationItems = [
     {
@@ -10,15 +10,5 @@ export const navigationItems = [
         title: "Projects",
         path: "/projects",
         icon: FolderGit2,
-    },
-    {
-        title: "Trash",
-        path: "/trash",
-        icon: Trash2,
-    },
-    {
-        title: "Settings",
-        path: "/settings",
-        icon: Settings,
     }
 ];

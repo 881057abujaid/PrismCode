@@ -1,49 +1,123 @@
 :root {
-    /* Background */
-    --background: #09090b;
-    --surface: #111827;
-    --surface-hover: #1f2937;
+    /* =================================
+       PrismCode Canvas
+    ================================= */
 
-    /* Brand */
-    --primary: #06b6d4;
-    --primary-hover: #0891b2;
+    --background: #020817;
+    --background-deep: #01050f;
+    --background-soft: #050c1c;
+
+    /* =================================
+       Surfaces
+    ================================= */
+
+    --surface: #071022;
+    --surface-soft: #091426;
+    --surface-hover: #0c1930;
+    --surface-elevated: #0a1428;
+
+    /* =================================
+       PrismCode Brand
+    ================================= */
+
+    --primary: #00d9ff;
+    --primary-hover: #22e2ff;
+
     --secondary: #8b5cf6;
-    --secondary-hover: #7c3aed;
+    --secondary-hover: #a855f7;
 
-    /* Text */
+    --prism-blue: #3b82f6;
+    --prism-violet: #7c3aed;
+    --prism-magenta: #d946ef;
+
+    /* =================================
+       Typography
+    ================================= */
+
     --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --text-secondary: #9caac0;
+    --text-muted: #66758d;
 
-    /* Border */
-    --border: #1e293b;
+    /* =================================
+       Borders
+    ================================= */
 
-    /* Status */
+    --border: #182842;
+    --border-soft: rgba(91, 132, 180, 0.18);
+    --border-hover: rgba(0, 217, 255, 0.42);
+
+    /* =================================
+       Status
+    ================================= */
+
     --success: #22c55e;
     --warning: #f59e0b;
-    --error: #ef4444;
-    --info: #3b82f6;
+    --error: #f43f5e;
+    --info: #38bdf8;
 
-    /* Effects */
-    --shadow: rgba(0, 0, 0, 0.35);
-    --glass: rgba(255, 255, 255, 0.05);
+    /* =================================
+       Glass
+    ================================= */
+
+    --glass: rgba(4, 12, 28, 0.78);
+    --glass-strong: rgba(5, 14, 31, 0.92);
+    --glass-border: rgba(112, 153, 201, 0.18);
+
+    /* =================================
+       Shadows
+    ================================= */
+
+    --shadow: rgba(0, 0, 0, 0.5);
+    --shadow-deep: rgba(0, 0, 0, 0.72);
+
+    /* =================================
+       Prism Glows
+    ================================= */
+
+    --glow-primary: rgba(0, 217, 255, 0.14);
+    --glow-primary-strong: rgba(0, 217, 255, 0.28);
+
+    --glow-secondary: rgba(139, 92, 246, 0.14);
+    --glow-secondary-strong: rgba(139, 92, 246, 0.28);
+
+    --glow-magenta: rgba(217, 70, 239, 0.1);
+
+    /* =================================
+       Radius
+    ================================= */
+
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
 }
 
 @theme {
     --color-background: var(--background);
+    --color-background-deep: var(--background-deep);
+    --color-background-soft: var(--background-soft);
+
     --color-surface: var(--surface);
+    --color-surface-soft: var(--surface-soft);
     --color-surface-hover: var(--surface-hover);
+    --color-surface-elevated: var(--surface-elevated);
 
     --color-primary: var(--primary);
     --color-primary-hover: var(--primary-hover);
+
     --color-secondary: var(--secondary);
     --color-secondary-hover: var(--secondary-hover);
+
+    --color-prism-blue: var(--prism-blue);
+    --color-prism-violet: var(--prism-violet);
+    --color-prism-magenta: var(--prism-magenta);
 
     --color-text-primary: var(--text-primary);
     --color-text-secondary: var(--text-secondary);
     --color-text-muted: var(--text-muted);
 
     --color-border: var(--border);
+    --color-border-hover: var(--border-hover);
 
     --color-success: var(--success);
     --color-warning: var(--warning);
