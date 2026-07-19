@@ -8,7 +8,6 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import ProtectedRoutes from "./ProtectedRoutes";
 import PublicRoutes from "./PublicRoutes";
 import Project from "../pages/projects/Projects";
-import Settings from "../pages/settings/settings";
 import AuthLayout from "../layouts/AuthLayout";
 import CreateProject from "../pages/projects/CreateProject";
 import ProjectDetails from "../pages/projects/ProjectDetails";
@@ -39,7 +38,6 @@ const AppRouter = () => {
                         <Route path="/projects/:projectId" element={<ProjectDetails />} />
                         <Route path="/projects/:projectId/edit" element={<EditProject />} />
                         <Route path="/projects/:projectId/reviews/:reviewId" element={<ReviewDetails />} />
-                        <Route path="/settings" element={<Settings />} />
                     </Route>
                 </Route>
                 <Route path="/" element={<Home />} />
